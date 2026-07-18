@@ -1,0 +1,182 @@
+# ==========================================
+# Python Files
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+*.pyo
+*.pyd
+
+# ==========================================
+# Virtual Environment
+# ==========================================
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+virtualenv/
+
+# ==========================================
+# Distribution / Packaging
+# ==========================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==========================================
+# Jupyter Notebooks
+# ==========================================
+.ipynb_checkpoints/
+*.ipynb
+*.ipynb_checkpoints
+*.nbconvert
+
+# ==========================================
+# IDE Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.workspace
+.settings/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# ==========================================
+# OS Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+*.tmp
+*.temp
+
+# ==========================================
+# Streamlit Files
+# ==========================================
+.streamlit/cache/
+.streamlit/secrets.toml
+.streamlit/*.log
+
+# ==========================================
+# Data Files (Important!)
+# ==========================================
+*.csv
+*.xlsx
+*.xls
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+data/
+raw_data/
+processed_data/
+*.pkl
+*.joblib
+*.pickle
+
+# ==========================================
+# Model Files
+# ==========================================
+*.h5
+*.pth
+*.pt
+*.pb
+*.ckpt
+models/
+*.model
+*.sav
+
+# ==========================================
+# Environment Variables
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.env
+secrets.py
+config.py
+credentials.json
+service-account.json
+
+# ==========================================
+# Logs and Reports
+# ==========================================
+logs/
+*.log
+*.out
+*.err
+*.pid
+*.lock
+*.coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ==========================================
+# Temporary Files
+# ==========================================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+~$*
+
+# ==========================================
+# Docker
+# ==========================================
+docker-compose.override.yml
+.dockerignore
+*.dockerignore
+
+# ==========================================
+# Other
+# ==========================================
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.exe
+*.msi
+*.dmg
+*.iso
+*.apk

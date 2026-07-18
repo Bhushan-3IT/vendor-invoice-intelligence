@@ -19,7 +19,7 @@ def predict_freight_cost(input_data):
 
     Parameters
     ----------
-    input_data : dict
+    input_data : dict with 'Dollars' key
 
     Returns
     -------
@@ -27,11 +27,5 @@ def predict_freight_cost(input_data):
     """
     model = load_model()
     input_df = pd.DataFrame(input_data)
-    prediction = model.predict(input_df[['Quantity', 'Dollars']])
+    prediction = model.predict(input_df[['Dollars']])
     return {'Predicted_Freight': prediction}
-
-if submit_freight:
-    input_data = {
-        "Dollars": [dollars]  # Only Dollars, no Quantity
-    }
-    prediction = predict_freight_cost(input_data)['Predicted_Freight']

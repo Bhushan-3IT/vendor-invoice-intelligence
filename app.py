@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+st.cache_data.clear()
+st.cache_resource.clear()
+
 from inference.predict_freight import predict_freight_cost
 from inference.predict_invoice_flag import predict_invoice_flag
 

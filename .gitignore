@@ -99,9 +99,9 @@ Desktop.ini
 data/
 raw_data/
 processed_data/
-*.pkl
-*.joblib
-*.pickle
+# *.pkl
+# *.joblib
+# *.pickle
 
 # ==========================================
 # Model Files
@@ -111,8 +111,8 @@ processed_data/
 *.pt
 *.pb
 *.ckpt
-models/
-*.model
+# models/
+# *.model
 *.sav
 
 # ==========================================

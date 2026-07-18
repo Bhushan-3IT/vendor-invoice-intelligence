@@ -53,7 +53,7 @@ if selected_model == "Freight Cost Prediction":
     st.subheader("Freight Cost Prediction")
     st.markdown("""\
     **Objective:**  
-    Predict freight cost for a vendor invoice using **Quantity** and **Invoice Dollars** to support budgeting, forecasting, and vendor negotiations.
+    Predict freight cost for a vendor invoice using **Invoice Dollars** to support budgeting, forecasting, and vendor negotiations.
     """)
     
     with st.form("freight_form"):
@@ -74,19 +74,16 @@ if selected_model == "Freight Cost Prediction":
         submit_freight = st.form_submit_button("Predict Freight Cost")
         
         if submit_freight:
+            # Only send Dollars - model only expects Dollars
             input_data = {
-                "Quantity": [quantity],
                 "Dollars": [dollars]
             }
-            try:
-                prediction = predict_freight_cost(input_data)['Predicted_Freight']
-                st.success("Prediction completed successfully.")
-                st.metric(
-                    label="Estimated Freight Cost",
-                    value=f"${prediction[0]:,.2f}"
-                )
-            except Exception as e:
-                st.error(f"Prediction failed: {str(e)}")
+            prediction = predict_freight_cost(input_data)['Predicted_Freight']
+            st.success("Prediction completed successfully.")
+            st.metric(
+                label="Estimated Freight Cost",
+                value=f"${prediction[0]:,.2f}"
+            )
 
 # Invoice Flag Prediction
 # ---

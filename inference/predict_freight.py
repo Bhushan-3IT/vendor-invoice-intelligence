@@ -30,10 +30,8 @@ def predict_freight_cost(input_data):
     prediction = model.predict(input_df[['Quantity', 'Dollars']])
     return {'Predicted_Freight': prediction}
 
-if __name__ == "__main__":
-    sample_data = {
-        "Quantity": [1200, 500, 100],
-        "Dollars": [18500, 9000, 3000]
+if submit_freight:
+    input_data = {
+        "Dollars": [dollars]  # Only Dollars, no Quantity
     }
-    prediction = predict_freight_cost(sample_data)
-    print(prediction)
+    prediction = predict_freight_cost(input_data)['Predicted_Freight']

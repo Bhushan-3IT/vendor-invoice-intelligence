@@ -1,25 +1,21 @@
 import joblib
 import pandas as pd
+import os
 
-MODEL_PATH = "../freight_cost_prediction/models/predict_freight_model.pkl"
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'freight_cost_prediction', 'models', 'predict_freight_model.pkl')
 
-
-
-def load_model(model_path: str=MODEL_PATH):
+def load_model(model_path=MODEL_PATH):
     """
-    Load trained freight predict model .
+    Load trained freight predict model.
     """
     with open(model_path, "rb") as f:
         model = joblib.load(f)
-
-    
-
     return model
-
 
 def predict_freight_cost(input_data):
     """
-    Predict predict_freight_cost for new customer
+    Predict freight cost for new customer
 
     Parameters
     ----------
@@ -27,25 +23,17 @@ def predict_freight_cost(input_data):
 
     Returns
     -------
-    pd.DataFrame with freight cost
+    dict with freight cost
     """
-
     model = load_model()
-
     input_df = pd.DataFrame(input_data)
-
-
-    input_df["Predicted_Flag"] = model.predict(input_df).round()
-
-    return input_df
-
+    prediction = model.predict(input_df[['Quantity', 'Dollars']])
+    return {'Predicted_Freight': prediction}
 
 if __name__ == "__main__":
-
     sample_data = {
-        "Dollars": [18500, 9000, 3000, 200]
+        "Quantity": [1200, 500, 100],
+        "Dollars": [18500, 9000, 3000]
     }
-
     prediction = predict_freight_cost(sample_data)
-
     print(prediction)

@@ -1,6 +1,7 @@
 import joblib
 import pandas as pd
 import os
+import numpy as np
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, 'invoice_flagging', 'models', 'predict_flag_invoice.pkl')
@@ -24,7 +25,7 @@ def predict_invoice_flag(input_data):
 
     Parameters
     ----------
-    input_data : dict
+    input_data : dict with invoice features
 
     Returns
     -------
@@ -32,11 +33,26 @@ def predict_invoice_flag(input_data):
     """
     model, scaler = load_model()
 
+    # Create DataFrame from input
     input_df = pd.DataFrame(input_data)
-
-    features = ['invoice_quantity', 'invoice_dollars', 'Freight', 'total_item_quantity', 'total_item_dollars']
-    input_scaled = scaler.transform(input_df[features])
-
+    
+    # All 6 features in EXACT order scaler expects
+    features = ['invoice_quantity', 'invoice_dollars', 'Freight', 
+                'total_item_quantity', 'total_item_dollars', 'avg_receiving_delay']
+    
+    # Ensure ALL features exist (add missing ones with default value 0)
+    for feature in features:
+        if feature not in input_df.columns:
+            input_df[feature] = 0
+            print(f"Added missing feature: {feature}")
+    
+    # Select only the features in the correct order
+    X = input_df[features]
+    
+    # Scale the features
+    input_scaled = scaler.transform(X)
+    
+    # Predict
     prediction = model.predict(input_scaled)
 
     return {'Predicted_Flag': prediction}

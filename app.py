@@ -78,12 +78,15 @@ if selected_model == "Freight Cost Prediction":
             input_data = {
                 "Dollars": [dollars]
             }
-            prediction = predict_freight_cost(input_data)['Predicted_Freight']
-            st.success("Prediction completed successfully.")
-            st.metric(
-                label="Estimated Freight Cost",
-                value=f"${prediction[0]:,.2f}"
-            )
+            try:
+                prediction = predict_freight_cost(input_data)['Predicted_Freight']
+                st.success("Prediction completed successfully.")
+                st.metric(
+                    label="Estimated Freight Cost",
+                    value=f"${prediction[0]:,.2f}"
+                )
+            except Exception as e:
+                st.error(f"Prediction failed: {str(e)}")
 
 # Invoice Flag Prediction
 # ---
@@ -108,11 +111,6 @@ else:
                 min_value=0.0,
                 value=1.73
             )
-            avg_receiving_delay = st.number_input(  # ← ADD THIS
-                "Avg Receiving Delay (days)",
-                min_value=0,
-                value=12
-            )
         
         with col2:
             invoice_dollars = st.number_input(
@@ -132,6 +130,11 @@ else:
                 min_value=1.0,
                 value=2476.0
             )
+            avg_receiving_delay = st.number_input(
+                "Avg Receiving Delay (days)",
+                min_value=0,
+                value=12
+            )
             submit_flag = st.form_submit_button("Evaluate Invoice Risk")
         
         if submit_flag:
@@ -141,15 +144,31 @@ else:
                 "Freight": [freight],
                 "total_item_quantity": [total_item_quantity],
                 "total_item_dollars": [total_item_dollars],
-                "avg_receiving_delay": [avg_receiving_delay]  # ← ADD THIS
+                "avg_receiving_delay": [avg_receiving_delay]
             }
-            flag_prediction = predict_invoice_flag(input_data)['Predicted_Flag']
-            is_flagged = bool(flag_prediction[0])
-            
-            if is_flagged:
-                st.error("🚨 **Invoice Flagged for Manual Approval**")
-            else:
-                st.success("✅ **Invoice Approved**")
+            try:
+                flag_prediction = predict_invoice_flag(input_data)['Predicted_Flag']
+                is_flagged = bool(flag_prediction[0])
+                
+                if is_flagged:
+                    st.error("🚨 **Invoice Flagged for Manual Approval**")
+                    st.markdown("""
+                    **Reasons for flagging:**
+                    - Abnormal cost patterns detected
+                    - Discrepancy between quantity and dollar amounts
+                    - Unusual freight-to-cost ratio
+                    - High receiving delay
+                    """)
+                else:
+                    st.success("✅ **Invoice Approved** - No manual intervention required")
+                
+                st.metric(
+                    label="Flag Status",
+                    value="⚠️ Flagged" if is_flagged else "✅ Approved",
+                    delta="Review Required" if is_flagged else "Auto-Approved"
+                )
+            except Exception as e:
+                st.error(f"Prediction failed: {str(e)}")
 
 # Footer
 # ---
